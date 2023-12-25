@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Level Dropdown with Checkboxes</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu .dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-top: -1px;
+        }
+
+        .dropdown-menu input[type="checkbox"] {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" id="selectedItems">Tutorials
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a tabindex="-1" href="#"><input type="checkbox">HTML</a></li>
+                <li><a tabindex="-1" href="#"><input type="checkbox">CSS</a></li>
+                <li class="dropdown-submenu">
+                    <a class="test" tabindex="-1" href="#"><input type="checkbox">New dropdown <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a tabindex="-1" href="#"><input type="checkbox">2nd level dropdown</a></li>
+                        <li><a tabindex="-1" href="#"><input type="checkbox">2nd level dropdown</a></li>
+                        <li class="dropdown-submenu">
+                            <a class="test" href="#"><input type="checkbox">Another dropdown <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#"><input type="checkbox">3rd level dropdown</a></li>
+                                <li><a href="#"><input type="checkbox">3rd level dropdown</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('.dropdown-menu').find('input[type="checkbox"]').on('change', function() {
+                let selectedItems = [];
+                $('.dropdown-menu').find('input[type="checkbox"]:checked').each(function() {
+                    selectedItems.push($(this).parent().text().trim());
+                });
+                if (selectedItems.length > 0) {
+                    $('#selectedItems').html(selectedItems.join(', ') + ' <span class="caret"></span>');
+                } else {
+                    $('#selectedItems').html('Tutorials <span class="caret"></span>');
+                }
+            });
+
+            $('.dropdown-menu a.test').on("click", function(e){
+                $(this).next('ul').toggle();
+                e.stopPropagation();
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>
